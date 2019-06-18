@@ -8,8 +8,6 @@ def reverse(x):
         x = x // 10
     return res
 
-reverse(-123)
-
 def test_reverse():
     assert reverse(123) == 321
     # assert reverse(-123) == -321
