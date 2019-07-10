@@ -21,9 +21,19 @@ class Vector2d:
     def __str__(self):
         return str(tuple(self))
 
+    def __format__(self, format_spec=''):
+        components = (format(c, format_spec) for c in self)
+        return '({}, {})'.format(*components)
+
     def __bytes__(self):
         return (bytes([ord(self.typecode)]) +
                 bytes(array(self.typecode, self)))
+
+    @classmethod
+    def frombytes(cls, octets):
+        typecode = chr(octets[0])
+        memv = memoryview(octets[1:]).cast(typecode)
+        return cls(*memv)
 
     def __eq__(self, other):
         return tuple(self) == tuple(other)
@@ -39,3 +49,5 @@ if __name__ == '__main__':
     my_vector = Vector2d(3, 4)
     print(repr(my_vector))
     print(str(my_vector))
+
+    print(format(Vector2d(3, 5), '.2f'))
